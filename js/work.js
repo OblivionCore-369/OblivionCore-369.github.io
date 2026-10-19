@@ -8,7 +8,7 @@
   const INK = css("--ink"), INK3 = css("--ink-3"), RULE = css("--rule-2"), ACC = css("--accent");
 
   const meta = {
-    graphmind: { dom: "Graph learning · node classification", fig: "0.823 accuracy", q: "Can 140 labelled papers and their citation links classify 2,708?" },
+    graphmind: { dom: "Graph learning · node classification", fig: "0.792 accuracy", q: "Can 140 labelled papers and their citation links classify 2,708?" },
     scholaryx: { dom: "LLM agents · tool use", fig: "42.7 s per run", q: "Can a fixed chain of agents write a sourced report — and show every step?" },
     moodalyx: { dom: "NLP · sequence classification", fig: "0.880 macro-F1", q: "What does a sequence model read in a sentence — and where does it fail?" },
     creditcompass: { dom: "Tabular ML · calibration", fig: "0.953 ROC-AUC", q: "Can a default probability be taken at face value?" },
