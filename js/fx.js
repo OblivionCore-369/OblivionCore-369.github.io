@@ -26,6 +26,8 @@
 
   /* hero orb — a 3D citation-style graph on a sphere; a message-passing pulse runs across it */
   const cv = $(".hero-orb"), ctx = cv.getContext("2d"), hero = $(".hero");
+  const portrait = $(".hero-portrait"), pf = portrait && $(".pf", portrait);
+  if (portrait) B.introDone.then(() => setTimeout(() => { portrait.classList.add("in"); setTimeout(() => portrait.classList.add("settled"), 1400); }, 120));
   const NN = 150, pts = [], edges = [];
   for (let i = 0; i < NN; i++) { // Fibonacci sphere, slightly jittered
     const y = 1 - (i / (NN - 1)) * 2, r = Math.sqrt(1 - y * y), th = i * 2.39996 + Math.sin(i) * .2;
@@ -42,6 +44,7 @@
     const src = Math.floor(Math.random() * NN), hop = new Array(NN).fill(99); hop[src] = 0;
     const q = [src]; while (q.length) { const u = q.shift(); for (const v of adj[u]) if (hop[v] > hop[u] + 1) { hop[v] = hop[u] + 1; q.push(v); } }
     pulse = { hop, t0: t };
+    if (portrait) { portrait.classList.remove("ping"); void portrait.offsetWidth; portrait.classList.add("ping"); }
   };
   function drawOrb(t) {
     ctx.clearRect(0, 0, W, H);
@@ -88,6 +91,12 @@
     copy.style.opacity = (1 - heroP * 1.5).toFixed(3);
     copy.style.transform = `translateY(${(-heroP * 70).toFixed(1)}px)`;
     cv.style.opacity = (1 - heroP * .9).toFixed(3);
+    if (pf) { // drifts with the orb, then lifts and fades as the hero scrolls away
+      pf.style.setProperty("--px", (mx * 26).toFixed(1) + "px");
+      pf.style.setProperty("--py", (my * 26 - heroP * 60).toFixed(1) + "px");
+      if (portrait.classList.contains("in")) pf.style.setProperty("--ps", (1 + heroP * .12).toFixed(3));
+      portrait.style.opacity = (1 - heroP * 1.1).toFixed(3);
+    }
   });
 
   /* switcher card — one system at a time (read from the contents list work.js rendered) */

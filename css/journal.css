@@ -68,10 +68,40 @@ p { margin: 0; }
 .hero-word { position: absolute; left: 50%; top: 46%; margin: 0; transform: translate(-50%, -50%) scale(var(--ws, 1)); font: 800 clamp(110px, 24vw, 420px)/.8 var(--display); letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--accent) 45%, transparent); white-space: nowrap; pointer-events: none; user-select: none; z-index: 0; }
 .hero-orb { position: absolute; z-index: 1; right: max(2vw, calc(50% - 760px)); top: 50%; width: min(64vw, 760px); aspect-ratio: 1; height: auto; transform: translateY(-50%); pointer-events: none; }
 .hero-portrait { position: absolute; z-index: 1; right: max(2vw, calc(50% - 760px)); top: 50%; width: min(64vw, 760px); aspect-ratio: 1; margin: 0; transform: translateY(-50%); display: grid; place-items: center; pointer-events: none; }
-.hero-portrait picture { position: relative; width: 40%; margin-top: -6%; aspect-ratio: 3 / 4; border-radius: 999px 999px 28px 28px; }
-.hero-portrait picture::before { content: ""; position: absolute; inset: -12%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 34%, transparent), transparent 72%); filter: blur(10px); z-index: -1; }
-.hero-portrait picture::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 1.5px solid color-mix(in srgb, var(--accent) 80%, transparent); transform: translate(16px, 16px); z-index: -1; }
-.hero-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent), 0 30px 80px -24px color-mix(in srgb, var(--accent) 50%, transparent); }
+.hero-portrait .pf { position: relative; width: 46%; aspect-ratio: 1; transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(var(--ps, 1)); will-change: transform; }
+.hero-portrait picture { position: absolute; inset: 9%; border-radius: 50%; overflow: hidden; z-index: 2; background: #120f0d; box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 50%, transparent), 0 30px 90px -20px color-mix(in srgb, var(--accent) 55%, transparent); }
+.hero-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+/* soft ember aura */
+.pf-glow { position: absolute; inset: -18%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 40%, transparent), color-mix(in srgb, #3b4cc0 14%, transparent) 55%, transparent 74%); filter: blur(14px); z-index: 0; animation: pf-breathe 6s ease-in-out infinite; }
+/* sweeping light arc (conic gradient masked to a thin ring) */
+.pf-arc { position: absolute; inset: 4.5%; border-radius: 50%; z-index: 3; background: conic-gradient(from 0deg, transparent 0 62%, color-mix(in srgb, var(--accent) 30%, transparent) 76%, var(--accent) 92%, #ffd2b3 96%, transparent 97%); -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 3px), #000 calc(100% - 2.5px)); mask: radial-gradient(closest-side, transparent calc(100% - 3px), #000 calc(100% - 2.5px)); filter: drop-shadow(0 0 6px var(--accent)); animation: pf-spin 5.5s linear infinite; }
+/* outer dashed ring, counter-rotating, with tick marks */
+.pf-dash { position: absolute; inset: 0; border-radius: 50%; z-index: 1; border: 1px dashed color-mix(in srgb, var(--accent) 55%, transparent); animation: pf-spin 40s linear infinite reverse; }
+.pf-dash::before { content: ""; position: absolute; inset: -6px; border-radius: 50%; background: repeating-conic-gradient(color-mix(in srgb, var(--ink) 40%, transparent) 0 .6deg, transparent .6deg 15deg); -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 6px), #000 calc(100% - 5px)); mask: radial-gradient(closest-side, transparent calc(100% - 6px), #000 calc(100% - 5px)); }
+/* graph nodes orbiting the portrait, like messages passing along edges */
+.pf-orbit { position: absolute; inset: var(--o, 0%); border-radius: 50%; z-index: 4; animation: pf-spin var(--d, 9s) linear infinite; animation-delay: var(--dl, 0s); }
+.pf-orbit i { position: absolute; left: 50%; top: 0; width: var(--s, 9px); aspect-ratio: 1; margin: calc(var(--s, 9px) / -2) 0 0 calc(var(--s, 9px) / -2); border-radius: 50%; background: var(--c, var(--accent)); box-shadow: 0 0 10px 2px var(--c, var(--accent)), 0 0 24px 6px color-mix(in srgb, var(--c, var(--accent)) 40%, transparent); }
+.pf-orbit.o1 { --o: 0%; --d: 9s; --s: 9px; }
+.pf-orbit.o2 { --o: 0%; --d: 14s; --s: 6px; --dl: -6s; --c: #f2ede4; animation-direction: reverse; }
+.pf-orbit.o3 { --o: 4.5%; --d: 5.5s; --s: 5px; --dl: -1.2s; --c: #ffd2b3; }
+.pf-orbit.o4 { --o: -7%; --d: 22s; --s: 7px; --dl: -11s; --c: #6f7cff; }
+/* ripple fired in sync with the orb's message-passing pulse (fx.js adds .ping) */
+.pf-ping { position: absolute; inset: 9%; border-radius: 50%; z-index: 1; border: 1.5px solid var(--accent); opacity: 0; }
+.hero-portrait.ping .pf-ping { animation: pf-ping 1.6s cubic-bezier(.2,.7,.2,1) 1; }
+/* entrance: circular wipe + settle, after the intro curtain */
+.motion-on .hero-portrait .pf { opacity: 0; --ps: .86; filter: blur(8px); transition: opacity .9s var(--ease), filter .9s var(--ease); }
+.motion-on .hero-portrait.in .pf { opacity: 1; --ps: 1; filter: none; transition: opacity .9s var(--ease), filter .9s var(--ease), transform 1.2s var(--ease); }
+.motion-on .hero-portrait.settled .pf { transition: none; }
+.motion-on .hero-portrait picture { clip-path: circle(0% at 50% 50%); transition: clip-path 1.3s cubic-bezier(.76,0,.24,1) .15s; }
+.motion-on .hero-portrait.in picture { clip-path: circle(50% at 50% 50%); }
+@media (min-width: 1280px) { .hero-portrait .pf { width: 58%; } }
+@keyframes pf-spin { to { transform: rotate(1turn); } }
+@keyframes pf-breathe { 50% { transform: scale(1.06); opacity: .8; } }
+@keyframes pf-ping { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.45); } }
+.motion-off .hero-portrait *, .motion-off .hero-portrait *::before { animation: none !important; }
+.motion-off .pf-orbit.o2, .motion-off .pf-orbit.o4 { transform: rotate(140deg); }
+.motion-off .pf-orbit.o3 { transform: rotate(250deg); }
+.motion-off .pf-arc { transform: rotate(200deg); }
 .mast { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
 .mast .tick { display: inline-block; width: 22px; height: 2px; background: var(--accent); vertical-align: middle; margin-right: 10px; }
 .hero-copy { max-width: 760px; margin-top: clamp(28px, 5vw, 64px); }
@@ -413,9 +443,9 @@ body.lens :where([data-ev])::after { content: attr(data-src); display: block; wi
 }
 @media (max-width: 960px) {
   .hero-orb { width: 110vw; right: -30vw; top: 34%; opacity: .55; }
-  .hero { padding-top: 350px; }
-  .hero-portrait { width: 168px; aspect-ratio: auto; left: var(--gut); right: auto; top: 92px; transform: none; }
-  .hero-portrait picture { width: 100%; }
+  .hero { padding-top: 330px; }
+  .hero-portrait { width: 200px; left: calc(var(--gut) - 22px); right: auto; top: 78px; transform: none; }
+  .hero-portrait .pf { width: 100%; }
   .hero-switch { position: static; margin-top: 28px; }
   .sw-card { flex: 1; min-width: 0; }
   .contents ol { grid-template-columns: 1fr 1fr; }
@@ -451,5 +481,6 @@ body.lens :where([data-ev])::after { content: attr(data-src); display: block; wi
   .skills thead th { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .hero-portrait *, .hero-portrait *::before { animation: none !important; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
