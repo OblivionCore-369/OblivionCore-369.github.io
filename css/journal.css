@@ -67,6 +67,13 @@ p { margin: 0; }
 .hero-in { position: relative; z-index: 2; width: 100%; }
 .hero-word { position: absolute; left: 50%; top: 46%; margin: 0; transform: translate(-50%, -50%) scale(var(--ws, 1)); font: 800 clamp(110px, 24vw, 420px)/.8 var(--display); letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--accent) 45%, transparent); white-space: nowrap; pointer-events: none; user-select: none; z-index: 0; }
 .hero-orb { position: absolute; z-index: 1; right: max(2vw, calc(50% - 760px)); top: 50%; width: min(64vw, 760px); aspect-ratio: 1; height: auto; transform: translateY(-50%); pointer-events: none; }
+.hero-portrait { position: absolute; z-index: 1; right: max(2vw, calc(50% - 760px)); top: 50%; width: min(64vw, 760px); aspect-ratio: 1; margin: 0; transform: translateY(-50%); display: grid; place-items: center; pointer-events: none; }
+.hero-portrait picture { position: relative; width: 44%; aspect-ratio: 1; border-radius: 50%; }
+.hero-portrait picture::before { content: ""; position: absolute; inset: -14%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 38%, transparent), transparent 72%); filter: blur(8px); z-index: -1; }
+.hero-portrait picture::after { content: ""; position: absolute; inset: -9px; border-radius: 50%; border: 1px dashed color-mix(in srgb, var(--accent) 70%, transparent); animation: portrait-spin 28s linear infinite; }
+.hero-portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent), 0 24px 70px -20px color-mix(in srgb, var(--accent) 55%, transparent); }
+@keyframes portrait-spin { to { transform: rotate(1turn); } }
+.motion-off .hero-portrait picture::after { animation: none; }
 .mast { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
 .mast .tick { display: inline-block; width: 22px; height: 2px; background: var(--accent); vertical-align: middle; margin-right: 10px; }
 .hero-copy { max-width: 760px; margin-top: clamp(28px, 5vw, 64px); }
@@ -408,6 +415,9 @@ body.lens :where([data-ev])::after { content: attr(data-src); display: block; wi
 }
 @media (max-width: 960px) {
   .hero-orb { width: 110vw; right: -30vw; top: 34%; opacity: .55; }
+  .hero { padding-top: 250px; }
+  .hero-portrait { width: 124px; left: var(--gut); right: auto; top: 96px; transform: none; }
+  .hero-portrait picture { width: 100%; }
   .hero-switch { position: static; margin-top: 28px; }
   .sw-card { flex: 1; min-width: 0; }
   .contents ol { grid-template-columns: 1fr 1fr; }
@@ -443,5 +453,6 @@ body.lens :where([data-ev])::after { content: attr(data-src); display: block; wi
   .skills thead th { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .hero-portrait picture::after { animation: none; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
