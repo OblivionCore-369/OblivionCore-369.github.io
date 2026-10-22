@@ -34,3 +34,10 @@ Motion language: heading lines rise · content enters once · data figures anima
 glow, grain, marquee, custom cursor or 3D. Lenis smooth scroll; Motion.dev for figure animation.
 Files: index.html, css/journal.css, js/{core,work,timeline,research,skills,site}.js (+ data.js, evidence-data.js).
 Earlier versions are tagged in git: v4-documentary, v5-reference.
+
+## v7 — "Cinema" (22 Oct 2026, current)
+Dark ground, warm ink, one ember accent; bold Inter Tight display mixed with italic Crimson Pro.
+Effects (js/fx.js): intro curtain · 3D citation-graph orb with a message-passing pulse · giant outlined word that grows on scroll ·
+system switcher card · pinned 3D ring of the five posters turned by scroll · tilt + light on figure cards · cursor spotlight ·
+scroll progress · self-drawing timeline · skills marquee · grid-paper backdrop · floating pill nav.
+Motion off (button or reduced-motion) → no intro, no ring pin, everything static and readable.

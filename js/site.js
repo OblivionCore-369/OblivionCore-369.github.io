@@ -52,7 +52,9 @@
       $$(".hero .enter").forEach((e, i) => setTimeout(() => e.classList.add("in"), 520 + i * 160));
     };
     let done = false; const once = () => { if (!done) { done = true; go(); } };
-    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(once);
-    setTimeout(once, 900);
+    B.introDone.then(() => {
+      (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(once);
+      setTimeout(once, 900);
+    });
   }
 })();
