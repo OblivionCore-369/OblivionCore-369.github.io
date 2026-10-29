@@ -80,7 +80,7 @@
     G.edges.forEach(([a, b]) => { adj[a].push(b); adj[b].push(a); });
     const hop = new Array(N).fill(Infinity); hop[0] = 0;
     const q = [0]; while (q.length) { const u = q.shift(); for (const v of adj[u]) if (hop[v] === Infinity) { hop[v] = hop[u] + 1; q.push(v); } }
-    const shade = ["#8c8579", "#c9c1b3", INK, "#a69e90", "#6f685d", "#e2d9c8", "#7d9bb5"];
+    const shade = ["#8e8e93", "#c7c6c2", INK, "#a5a5a9", "#6e6e74", "#dddcd8", "#9aa3ad"];
     const counts = {}; G.nodes.forEach((n) => { counts[n[2]] = (counts[n[2]] || 0) + 1; });
     const lg = document.createElement("p"); lg.className = "gm-legend";
     lg.innerHTML = Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([k, v]) => `<span><i style="background:${shade[k]}"></i>${esc(G.classes[k].replace(/_/g, " "))} ${v}</span>`).join("");
@@ -94,7 +94,7 @@
       for (const [a, b] of G.edges) {
         const [x1, y1] = P(G.nodes[a]), [x2, y2] = P(G.nodes[b]), hh = Math.max(hop[a], hop[b]);
         const on = k >= hh - 1 && k < hh + 1.2;
-        ctx.strokeStyle = on ? ACC : "rgba(242,237,228,.14)"; ctx.lineWidth = on ? 1.2 : .6;
+        ctx.strokeStyle = on ? ACC : "rgba(236,235,232,.14)"; ctx.lineWidth = on ? 1.2 : .6;
         ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
       }
       G.nodes.forEach((n, i) => {
@@ -109,7 +109,7 @@
         const [x, y] = P(G.nodes[hover]), label = `${hover === 0 ? "Paper 1358 · " : ""}hop ${hop[hover]} · ${G.classes[G.nodes[hover][2]].replace(/_/g, " ")}`;
         ctx.font = '400 12px "Plex Mono", monospace'; const tw = ctx.measureText(label).width;
         const bx = clamp(x + 10, 4, w - tw - 18), by = clamp(y - 28, 4, h - 24);
-        ctx.fillStyle = INK; ctx.fillRect(bx, by, tw + 12, 20); ctx.fillStyle = "#0c0b0a"; ctx.fillText(label, bx + 6, by + 14);
+        ctx.fillStyle = INK; ctx.fillRect(bx, by, tw + 12, 20); ctx.fillStyle = "#0e0e10"; ctx.fillText(label, bx + 6, by + 14);
       }
       if (wave >= 0 && k > 3.4) wave = -1;
     }

@@ -57,4 +57,11 @@
       setTimeout(once, 900);
     });
   }
+
+  // "Building now" cards: a soft silver light follows the pointer
+  $$(".build-card").forEach((c) => c.addEventListener("pointermove", (e) => {
+    const r = c.getBoundingClientRect();
+    c.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+    c.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+  }));
 })();

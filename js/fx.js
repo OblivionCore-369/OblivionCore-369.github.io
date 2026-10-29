@@ -61,7 +61,7 @@
     for (const [a, b] of edges) {
       const depth = (2 - (P[a][2] + P[b][2]) / 2) / 3, h = pulse ? Math.max(pulse.hop[a], pulse.hop[b]) : 99;
       const on = pulse && k >= h - 1 && k < h + .8;
-      ctx.strokeStyle = on ? ACC : `rgba(242,237,228,${(.05 + depth * .16).toFixed(3)})`;
+      ctx.strokeStyle = on ? ACC : `rgba(236,235,232,${(.05 + depth * .16).toFixed(3)})`;
       ctx.globalAlpha = on ? .9 : 1;
       ctx.beginPath(); ctx.moveTo(P[a][0], P[a][1]); ctx.lineTo(P[b][0], P[b][1]); ctx.stroke();
     }
