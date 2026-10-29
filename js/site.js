@@ -58,6 +58,14 @@
     });
   }
 
+  // "Building now": recorded demo runs open in the media dialog, like the five systems
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-demo]"); if (!b) return;
+    const id = b.dataset.demo;
+    B.openMedia(`<video src="recordings/${id}.mp4?v=2" poster="assets/posters/${id}.jpg?v=2" controls autoplay playsinline></video>`,
+      "Kalpana — recorded run on the live Hugging Face Space (the video render wait is sped up).");
+  });
+
   // "Building now" cards: a soft silver light follows the pointer
   $$(".build-card").forEach((c) => c.addEventListener("pointermove", (e) => {
     const r = c.getBoundingClientRect();
