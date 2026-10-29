@@ -1,5 +1,5 @@
 /* FX (v7 "cinema"): intro curtain · 3D graph orb behind the name · giant word that grows on scroll ·
-   system switcher card · 3D ring of the five systems turned by scroll · tilt cards · cursor spotlight ·
+   system switcher card · 3D ring of the six systems turned by scroll · tilt cards · cursor spotlight ·
    scroll progress · drawn timeline. Motion off → everything renders once, flat and static. */
 (() => {
   "use strict";
@@ -112,10 +112,11 @@
   $$(".sw-arrow").forEach((b) => b.addEventListener("click", () => { show(+b.dataset.dir); restart(); }));
   show(0); restart();
 
-  /* 3D ring — five posters on a cylinder, turned by scrolling through the pinned section */
+  /* 3D ring — one poster per system on a cylinder, turned by scrolling through the pinned section */
   const ring = $("#ring"), sysSec = $("#systems"), links = $$("#contents a");
-  ring.innerHTML = D.systems.map((s, i) => `<figure style="--n:${i}" data-href="#p-${s.id}"><img src="assets/posters/${s.id}.jpg?v=2" alt="" loading="lazy"><figcaption>${B.esc(s.name)}<span>${s.n}</span></figcaption></figure>`).join("");
+  ring.innerHTML = D.systems.map((s, i) => `<figure style="--n:${i}" data-href="#p-${s.id}"><img src="assets/posters/${s.id}.jpg?v=3" alt="" loading="lazy"><figcaption>${B.esc(s.name)}<span>${s.n}</span></figcaption></figure>`).join("");
   const figs = $$("figure", ring);
+  ring.style.setProperty("--count", figs.length);
   ring.addEventListener("click", (e) => { const f = e.target.closest("figure"); if (f) B.scrollTo(f.dataset.href); });
   let front = -1;
   if (motion) scene((s) => {

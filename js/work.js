@@ -1,4 +1,4 @@
-/* Work: five equal "figure spreads". Each project keeps its own visual form (graph · pipeline · text ·
+/* Work: six equal "figure spreads". Each project keeps its own visual form (graph · pipeline · text ·
    probability against a threshold · stage timings), all drawn in the same ink + one accent. */
 (() => {
   "use strict";
@@ -12,10 +12,11 @@
     scholaryx: { dom: "LLM agents · tool use", fig: "42.7 s per run", q: "Can a fixed chain of agents write a sourced report — and show every step?" },
     moodalyx: { dom: "NLP · sequence classification", fig: "0.880 macro-F1", q: "What does a sequence model read in a sentence — and where does it fail?" },
     creditcompass: { dom: "Tabular ML · calibration", fig: "0.953 ROC-AUC", q: "Can a default probability be taken at face value?" },
-    verbalyx: { dom: "Speech · retrieval-augmented generation", fig: "4.5% WER", q: "Can you question a recording and check the answer against what was said?" }
+    verbalyx: { dom: "Speech · retrieval-augmented generation", fig: "4.5% WER", q: "Can you question a recording and check the answer against what was said?" },
+    kalpana: { dom: "Multimodal GenAI · tool calling", fig: "4 AI providers", q: "Can one model decide when to talk, draw or animate — and keep working when a provider fails?" }
   };
 
-  // contents index in the hero — the five systems, equal weight
+  // contents index in the hero — the six systems, equal weight
   $("#contents").innerHTML = D.systems.map((s) => `
     <li><a href="#p-${s.id}"><span class="c-n">${s.n}</span><span class="c-name">${esc(s.name)}<span class="c-dom">${esc(meta[s.id].dom)}</span></span><span class="c-fig">${esc(meta[s.id].fig)}</span></a></li>`).join("");
 
@@ -32,20 +33,24 @@
       <p class="cc-out" aria-live="polite"></p><p class="cc-note">A statistical estimate from one public dataset — not a credit score or a lending decision.</p>`,
     verbalyx: `<div class="fig-top"><span class="label">One 88 s synthetic meeting</span><button class="btn-line" type="button" data-act="ask">Ask again</button></div>
       <div class="vx-stages"></div>
-      <div class="vx-qa"><p class="vx-q"><span>Question</span><b></b></p><p class="vx-a"><span>Answer</span><b></b></p><p class="vx-ev"><span>Evidence</span><i></i></p></div>`
+      <div class="vx-qa"><p class="vx-q"><span>Question</span><b></b></p><p class="vx-a"><span>Answer</span><b></b></p><p class="vx-ev"><span>Evidence</span><i></i></p></div>`,
+    kalpana: `<div class="fig-top"><span class="label">Generated in the recorded run · Motion Preview</span></div>
+      <video class="kp-out" src="recordings/kalpana-output.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Paper boat on a lake at sunrise, the video Kalpana generated in the recorded run"></video>
+      <p class="kp-prompt"><span>Prompt</span> “A paper boat drifting across a calm lake at sunrise, gentle ripples, soft golden light, slow camera push-in.”</p>`
   };
   const caption = {
     graphmind: "Shade = true topic; hover a paper to read it. Passing messages shows what two GCN layers see: two hops.",
     scholaryx: "Four stages in a fixed order. Stage times are measured from one live run on the topic “CRISPR gene editing”.",
     moodalyx: "Three sentences sent to the live model on 17 Oct 2026, including one it gets confidently wrong.",
     creditcompass: "Two applicants sent to the live model on 17 Oct 2026; the needle is the predicted default probability.",
-    verbalyx: "Stage times measured on a Mac; the question was answered on the hosted demo, with the passage it used."
+    verbalyx: "Stage times measured on a Mac; the question was answered on the hosted demo, with the passage it used.",
+    kalpana: "The video Kalpana made on the live Space on 29 Oct 2026: an AI image with an ffmpeg camera move, 13.4 s from prompt to file."
   };
 
   $("#work-list").innerHTML = D.systems.map((s, i) => `
     <article class="work-item" id="p-${s.id}" data-n="${s.n}" aria-labelledby="w-${s.id}">
       <div class="w-text enter">
-        <span class="w-n">${s.n} / 05</span>
+        <span class="w-n">${s.n} / ${String(D.systems.length).padStart(2, "0")}</span>
         <h3 class="w-name" id="w-${s.id}">${esc(s.name)}</h3>
         <p class="w-dom">${esc(meta[s.id].dom)}</p>
         <p class="w-q">${esc(meta[s.id].q)}</p>

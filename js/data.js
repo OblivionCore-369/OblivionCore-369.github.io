@@ -76,26 +76,43 @@ window.PORTFOLIO = {
       method: "ffmpeg → Whisper “small” transcription → Mistral summary, actions and decisions → MiniLM embeddings in Chroma → answers grounded in the four most relevant chunks. Fixed a bug that let answers draw on previously analysed recordings.",
       limits: "Evaluated on one synthetic recording only. No timestamps or speaker labels. The public demo accepts uploads up to 10 minutes, 10 analyses a day.",
       tags: ["Whisper", "Mistral", "Chroma", "RAG"]
+    },
+    {
+      id: "kalpana", n: "06", name: "Kalpana",
+      field: "Multimodal generative AI · tool calling",
+      line: "One studio for text, voice, images and video: a chat that sees and speaks and decides by itself when to draw or animate, and a video studio that writes and renders multi-scene stories.",
+      metrics: [
+        { v: "1.9 s", k: "streamed chat answer, recorded run", ev: "verified", src: "recorded run on the live Space, 29 Oct 2026" },
+        { v: "11.6 s", k: "image the model chose to draw itself", ev: "verified", src: "recorded run on the live Space, 29 Oct 2026 (tool call)" },
+        { v: "4", k: "AI providers behind one interface", ev: "checked", src: "repository: OpenAI, Groq, Gemini, Kling" }
+      ],
+      demo: "https://anshag-kalpana.hf.space/", repo: "https://github.com/OblivionCore-369/kalpana",
+      problem: "Most generative-AI demos do one thing. Put chat, voice, image and video generation behind one interface where the model decides which tool to use, and keep it working when a provider fails or runs out of credits.",
+      method: "FastAPI back end: gpt-5.4-mini chat streamed over Server-Sent Events with function calling (generate_image, generate_video); Groq Whisper speech-to-text and OpenAI text-to-speech; Gemini images with an OpenAI fallback; Kling video with an ffmpeg Motion Preview fallback; background video jobs with live progress; MoviePy joins multi-scene stories with a narrator. Hand-built HTML/CSS/JS front end. Dockerised on Hugging Face Spaces behind a public-demo guard: per-visitor limits, daily caps, private galleries and 6-hour cleanup.",
+      limits: "No quality evaluation of the generated media yet. The Kling account currently has no credits, so the hosted demo makes Motion Preview videos (an AI image with a camera move) rather than generated footage. Limits and the job queue live in memory on one server.",
+      tags: ["Function calling", "SSE streaming", "Gemini · Kling", "Docker"]
     }
   ],
 
 
 
   /* Technical profile: each skill lists only the projects whose code uses it (checked in the repositories). */
-  projectsShort: { graphmind: "GraphMind", scholaryx: "Scholaryx", moodalyx: "Moodalyx", creditcompass: "CreditCompass", verbalyx: "Verbalyx", chatbot: "AI Cell chatbot" },
+  projectsShort: { graphmind: "GraphMind", scholaryx: "Scholaryx", moodalyx: "Moodalyx", creditcompass: "CreditCompass", verbalyx: "Verbalyx", kalpana: "Kalpana", chatbot: "AI Cell chatbot" },
   skills: [
     { group: "Machine & deep learning", items: [
       ["PyTorch Geometric · GCN / GAT", ["graphmind"]], ["TensorFlow / Keras · Bi-GRU", ["moodalyx"]],
       ["scikit-learn", ["creditcompass", "graphmind"]], ["XGBoost", ["creditcompass"]], ["ONNX Runtime", ["graphmind"]] ] },
     { group: "LLMs, agents & retrieval", items: [
-      ["LangChain agents & chains", ["scholaryx", "verbalyx"]], ["OpenAI API", ["scholaryx", "chatbot"]], ["Mistral API", ["verbalyx"]],
-      ["Tavily search", ["scholaryx"]], ["Chroma + sentence-transformers", ["verbalyx", "chatbot"]], ["BM25 + reciprocal rank fusion", ["chatbot"]], ["Whisper speech-to-text", ["verbalyx"]] ] },
+      ["LangChain agents & chains", ["scholaryx", "verbalyx"]], ["OpenAI API · function calling", ["scholaryx", "kalpana", "chatbot"]], ["Mistral API", ["verbalyx"]],
+      ["Tavily search", ["scholaryx"]], ["Chroma + sentence-transformers", ["verbalyx", "chatbot"]], ["BM25 + reciprocal rank fusion", ["chatbot"]], ["Whisper speech-to-text", ["verbalyx", "kalpana"]],
+      ["Image & video generation · Gemini, Kling, OpenAI TTS", ["kalpana"]], ["Server-Sent Events streaming", ["kalpana"]] ] },
     { group: "Evaluation & experiments", items: [
       ["Calibration · Brier · ECE", ["creditcompass", "moodalyx"]], ["Macro-F1 · per-class error analysis", ["moodalyx", "graphmind"]],
       ["Word error rate", ["verbalyx"]], ["Citation cross-check", ["scholaryx"]] ] },
     { group: "Engineering & deployment", items: [
-      ["FastAPI", ["graphmind", "scholaryx", "moodalyx", "creditcompass", "verbalyx", "chatbot"]], ["Docker · Hugging Face Spaces", ["graphmind", "scholaryx", "moodalyx", "creditcompass", "verbalyx"]],
-      ["Automated tests (unittest / pytest)", ["scholaryx", "verbalyx", "chatbot"]], ["Vanilla JS research interfaces", ["graphmind", "scholaryx", "moodalyx", "creditcompass", "verbalyx"]] ] }
+      ["FastAPI", ["graphmind", "scholaryx", "moodalyx", "creditcompass", "verbalyx", "kalpana", "chatbot"]], ["Docker · Hugging Face Spaces", ["graphmind", "scholaryx", "moodalyx", "creditcompass", "verbalyx", "kalpana"]],
+      ["Public-demo hardening · rate limits, caps, SSRF guard", ["scholaryx", "kalpana"]],
+      ["Automated tests (unittest / pytest)", ["scholaryx", "verbalyx", "chatbot"]], ["Vanilla JS interfaces", ["graphmind", "scholaryx", "moodalyx", "creditcompass", "verbalyx", "kalpana"]] ] }
   ],
 
   /* Certificates shown in the Experience section (all inspected; no issuer verification link checked). */
