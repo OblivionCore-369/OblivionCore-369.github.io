@@ -28,7 +28,7 @@
     revealOnEnter(enters.filter((r) => !r.closest(".hero")));
   }
 
-  const top = $("#top-bar"), links = $$(".menu a"), targets = links.map((a) => $(a.getAttribute("href")));
+  const top = $("#top-bar"), links = $$(".menu a"), targets = links.map((a) => { const h = a.getAttribute("href"); return h && h.startsWith("#") ? $(h) : null; });
   scene((s) => {
     top.classList.toggle("scrolled", s.y > 8);
     if (motion) { if (s.y > 400 && s.dy > 3) top.classList.add("hide"); if (s.dy < -3 || s.y < 400) top.classList.remove("hide"); }

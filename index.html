@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter+Tight:wght@600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="vendor/lenis-1.3.27.css">
-<link rel="stylesheet" href="css/journal.css?v=16">
+<link rel="stylesheet" href="css/journal.css?v=17">
 <script>document.documentElement.classList.replace("no-js", "js");</script>
 </head>
 <body>
@@ -41,6 +41,7 @@
       <li><a href="#interests">Interests</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li><a href="assets/cv/Ansh_Agrawal_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
     </ul>
     <div class="tools">
       <button class="tog" id="lens" type="button" aria-pressed="false" title="Show the source of every claim (E)">Sources</button>
@@ -100,6 +101,27 @@
   </div>
 </section>
 
+<!-- Hero screenshot strip -->
+<div class="screenshot-strip" aria-label="Project screenshots">
+  <div class="strip-track">
+    <a class="strip-item" href="graphmind/" target="_blank" rel="noopener">
+      <img src="assets/posters/graphmind.jpg" alt="GraphMind — interactive graph explorer showing node classification on the Cora citation network" width="480" height="300" loading="lazy">
+      <span class="strip-label">GraphMind</span>
+    </a>
+    <a class="strip-item" href="scholaryx/" target="_blank" rel="noopener">
+      <img src="assets/posters/scholaryx.jpg" alt="Scholaryx — research workbench showing the agent pipeline stages and a generated report" width="480" height="300" loading="lazy">
+      <span class="strip-label">Scholaryx</span>
+    </a>
+    <a class="strip-item" href="https://anshag-kalpana.hf.space/" target="_blank" rel="noopener">
+      <img src="assets/posters/kalpana.jpg" alt="Kalpana — multimodal AI studio with chat, image and video generation" width="480" height="300" loading="lazy">
+      <span class="strip-label">Kalpana</span>
+    </a>
+    <a class="strip-item strip-item--placeholder" href="#building">
+      <span class="strip-placeholder" aria-label="Aivanta — in progress">Aivanta</span>
+    </a>
+  </div>
+</div>
+
 <section class="section wrap" id="about" aria-labelledby="about-h">
   <div class="about">
     <h2 class="label" id="about-h">About</h2>
@@ -132,6 +154,7 @@
   <header class="sec-head build-head">
     <p class="label">Building now</p>
     <h2 id="bd-h"><span class="line rise"><span>Aivanta,</span></span><span class="line rise"><span><em>research you can verify.</em></span></span></h2>
+    <p class="build-subtitle">Aivanta — verifiable research-to-report agent · 2 human approval gates · in progress</p>
   </header>
   <div class="build-grid">
     <article class="build-card enter">
@@ -144,6 +167,10 @@
         <li data-ev="checked" data-src="Metering table, 20 live research runs"><b class="num">$0.03</b><span>per research run, every claim checked</span></li>
       </ul>
       <p class="build-tags">FastAPI · Postgres · Redis · Cloudflare R2 · Docker · auth · ONNX reranker · LLM judge · 40 tests</p>
+      <div class="build-links">
+        <a class="btn-pill" href="https://github.com/OblivionCore-369/aivanta" target="_blank" rel="noopener">Repo →</a>
+        <!-- <a class="btn-pill" href="[AIVANTA_DEMO_URL]" target="_blank" rel="noopener">Demo →</a> -->
+      </div>
     </article>
   </div>
 </section>
@@ -191,6 +218,7 @@
     </div>
   </header>
   <div class="skills-wrap enter"><table class="skills" id="skills-table"></table></div>
+  <div class="skills-mobile enter" id="skills-mobile"></div>
 </section>
 
 <!-- 7 · experience & achievements -->
@@ -233,6 +261,11 @@
     <div>
       <p class="sec-lead" style="margin:0 0 18px">Open to Forward Deployed Engineering, generative-AI and applied-ML engineering internships — onsite anywhere in the world, or remote.</p>
       <a class="mail" href="mailto:ansh.aiml369@gmail.com">ansh.aiml369@gmail.com</a>
+      <div class="ct-buttons">
+        <a class="btn-pill solid" href="assets/cv/Ansh_Agrawal_Resume.pdf" target="_blank" rel="noopener">Download Resume (PDF)</a>
+        <a class="btn-pill" href="https://github.com/OblivionCore-369" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn-pill" href="https://www.linkedin.com/in/ansh-agrawal-0738803a6/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
     </div>
     <ul class="c-links">
       <li><a href="https://github.com/OblivionCore-369" target="_blank" rel="noopener">GitHub <span>OblivionCore-369 ↗</span></a></li>
@@ -259,8 +292,8 @@
 <script src="js/core.js?v=20"></script>
 <script src="js/work.js?v=4"></script>
 <script src="js/timeline.js?v=1"></script>
-<script src="js/skills.js?v=1"></script>
+<script src="js/skills.js?v=2"></script>
 <script src="js/fx.js?v=3"></script>
-<script src="js/site.js?v=3"></script>
+<script src="js/site.js?v=4"></script>
 </body>
 </html>
