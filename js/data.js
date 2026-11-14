@@ -11,7 +11,7 @@ window.PORTFOLIO = {
         { v: "0.782", k: "macro-F1", ev: "checked", src: "live re-evaluation on the Space" },
         { v: "0.678", k: "same model, links replaced by self-loops", ev: "checked", src: "live re-evaluation on the Space" }
       ],
-      demo: "https://anshag-graphmind.hf.space/", repo: "https://github.com/anshaiml369/graphmind",
+      demo: "https://anshag-graphmind.hf.space/", repo: "https://github.com/OblivionCore-369/graphmind",
       problem: "Semi-supervised node classification on the Cora citation graph: only 140 of 2,708 papers are labelled.",
       method: "Two-layer GCN (PyTorch Geometric) on the standard Cora split, exported to ONNX and served with FastAPI. Added a graph explorer, an edge experiment and live re-evaluation.",
       limits: "One dataset, one split, one training run. The self-loop comparison removes links only at prediction time, not in training.",
@@ -26,7 +26,7 @@ window.PORTFOLIO = {
         { v: "$0.002", k: "OpenAI cost per run", ev: "checked", src: "measured token usage, two runs" },
         { v: "5 / 5", k: "cited URLs found in sources", ev: "checked", src: "citation cross-check, both runs" }
       ],
-      demo: "https://anshag-scholaryx.hf.space/", repo: "https://github.com/anshaiml369/scholaryx",
+      demo: "https://anshag-scholaryx.hf.space/", repo: "https://github.com/OblivionCore-369/scholaryx",
       problem: "Gather recent web material on a free-text topic, read a source in depth, and write a structured report — with each step’s inputs and outputs visible.",
       method: "Search agent (Tavily) → reader agent (scraping) → writer chain → critic chain, all gpt-4o-mini via LangChain. Added a live workbench, per-stage timing, measured cost, a citation cross-check, usage limits and SSRF protection, covered by 11 tests.",
       limits: "Only two measured runs — not a benchmark. Strictly sequential: the critique does not feed back into the report. Live runs use paid APIs and are limited to 20 a day.",
@@ -41,7 +41,7 @@ window.PORTFOLIO = {
         { v: "0.880", k: "macro-F1", ev: "checked", src: "re-evaluation of the saved model" },
         { v: "0.048", k: "expected calibration error", ev: "checked", src: "re-evaluation of the saved model" }
       ],
-      demo: "https://anshag-moodalyx.hf.space/", repo: "https://github.com/anshaiml369/moodalyx",
+      demo: "https://anshag-moodalyx.hf.space/", repo: "https://github.com/OblivionCore-369/moodalyx",
       problem: "Six-class, imbalanced classification of short English text (dair-ai/emotion): joy has 695 test sentences, surprise only 66.",
       method: "Embedding → two bidirectional GRU layers (TensorFlow/Keras), served with FastAPI using exactly the evaluation preprocessing. Re-evaluated with per-class metrics, calibration and error analysis.",
       limits: "The test split was used for early stopping, so the score is optimistic. Weakest on surprise and love. It predicts a dataset label, not anyone’s emotional state, and can be confidently wrong.",
@@ -56,7 +56,7 @@ window.PORTFOLIO = {
         { v: "0.910", k: "PR-AUC (21.6% defaults)", ev: "checked", src: "held-out re-evaluation" },
         { v: "0.052", k: "Brier score (base 0.169)", ev: "checked", src: "held-out re-evaluation" }
       ],
-      demo: "https://anshag-creditcompass.hf.space/", repo: "https://github.com/anshaiml369/creditcompass",
+      demo: "https://anshag-creditcompass.hf.space/", repo: "https://github.com/OblivionCore-369/creditcompass",
       problem: "Imbalanced binary classification where accuracy misleads: always predicting “no default” would be about 78% accurate and catch nothing.",
       method: "Imputation + one-hot encoding → XGBoost (randomised search, 150 candidates × 5 folds) → sigmoid calibration. The interface shows the observed default rate among similar held-out applicants and a one-feature sensitivity tool.",
       limits: "One public dataset of undocumented origin. No fairness audit. Not a credit score or lending decision.",
@@ -71,7 +71,7 @@ window.PORTFOLIO = {
         { v: "3 / 3", k: "questions answered correctly", ev: "checked", src: "one attribution error noted" },
         { v: "55 s", k: "hosted analysis of that meeting", ev: "verified", src: "live run on the Space, 14 Oct 2026" }
       ],
-      demo: "https://anshag-verbalyx.hf.space/", repo: "https://github.com/anshaiml369/verbalyx",
+      demo: "https://anshag-verbalyx.hf.space/", repo: "https://github.com/OblivionCore-369/verbalyx",
       problem: "Long recordings are slow to search. Produce a usable written record and answer specific questions — verifiably.",
       method: "ffmpeg → Whisper “small” transcription → Mistral summary, actions and decisions → MiniLM embeddings in Chroma → answers grounded in the four most relevant chunks. Fixed a bug that let answers draw on previously analysed recordings.",
       limits: "Evaluated on one synthetic recording only. No timestamps or speaker labels. The public demo accepts uploads up to 10 minutes, 10 analyses a day.",
@@ -86,7 +86,7 @@ window.PORTFOLIO = {
         { v: "11.6 s", k: "image the model chose to draw itself", ev: "verified", src: "recorded run on the live Space, 29 Oct 2026 (tool call)" },
         { v: "4", k: "AI providers behind one interface", ev: "checked", src: "repository: OpenAI, Groq, Gemini, Kling" }
       ],
-      demo: "https://anshag-kalpana.hf.space/", repo: "https://github.com/anshaiml369/kalpana",
+      demo: "https://anshag-kalpana.hf.space/", repo: "https://github.com/OblivionCore-369/kalpana",
       problem: "Most generative-AI demos do one thing. Put chat, voice, image and video generation behind one interface where the model decides which tool to use, and keep it working when a provider fails or runs out of credits.",
       method: "FastAPI back end: gpt-5.4-mini chat streamed over Server-Sent Events with function calling (generate_image, generate_video); Groq Whisper speech-to-text and OpenAI text-to-speech; Gemini images with an OpenAI fallback; Kling video with an ffmpeg Motion Preview fallback; background video jobs with live progress; MoviePy joins multi-scene stories with a narrator. Hand-built HTML/CSS/JS front end. Dockerised on Hugging Face Spaces behind a public-demo guard: per-visitor limits, daily caps, private galleries and 6-hour cleanup.",
       limits: "No quality evaluation of the generated media yet. The Kling account currently has no credits, so the hosted demo makes Motion Preview videos (an AI image with a camera move) rather than generated footage. Limits and the job queue live in memory on one server.",
