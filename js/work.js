@@ -18,7 +18,7 @@
 
   // contents index in the hero — the six systems, equal weight
   $("#contents").innerHTML = D.systems.map((s) => `
-    <li><a href="#p-${s.id}"><span class="c-n">${s.n}</span><span class="c-name">${esc(s.name)}<span class="c-dom">${esc(meta[s.id].dom)}</span></span><span class="c-fig">${esc(meta[s.id].fig)}</span></a></li>`).join("");
+    <li><a href="#p-${s.id}" data-project="${s.id}"><span class="c-n">${s.n}</span><span class="c-name">${esc(s.name)}<span class="c-dom">${esc(meta[s.id].dom)}</span></span><span class="c-fig">${esc(meta[s.id].fig)}</span></a></li>`).join("");
 
   const figure = {
     graphmind: `<div class="fig-top"><span class="label">Cora · 200-paper neighbourhood of paper 1358</span><button class="btn-line" type="button" data-act="pass">Pass messages</button></div>
@@ -48,7 +48,7 @@
   };
 
   $("#work-list").innerHTML = D.systems.map((s, i) => `
-    <article class="work-item" id="p-${s.id}" data-n="${s.n}" aria-labelledby="w-${s.id}">
+    <article class="work-item" id="p-${s.id}" data-n="${s.n}" data-project="${s.id}" aria-labelledby="w-${s.id}">
       <div class="w-text enter">
         <span class="w-n">${s.n} / ${String(D.systems.length).padStart(2, "0")}</span>
         <h3 class="w-name" id="w-${s.id}">${esc(s.name)}</h3>
@@ -81,11 +81,12 @@
   /* GraphMind — the real neighbourhood; message passing on demand */
   (() => {
     const st = $(".stage-graphmind"), c = $("canvas", st), ctx = c.getContext("2d");
+    const GM_ACC = getComputedStyle(c.closest("[data-project]")).getPropertyValue("--accent").trim() || ACC;
     const G = E.cora, N = G.nodes.length, adj = Array.from({ length: N }, () => []);
     G.edges.forEach(([a, b]) => { adj[a].push(b); adj[b].push(a); });
     const hop = new Array(N).fill(Infinity); hop[0] = 0;
     const q = [0]; while (q.length) { const u = q.shift(); for (const v of adj[u]) if (hop[v] === Infinity) { hop[v] = hop[u] + 1; q.push(v); } }
-    const shade = ["#8e8e93", "#c7c6c2", INK, "#a5a5a9", "#6e6e74", "#dddcd8", "#9aa3ad"];
+    const shade = ["#8c8579", "#c9c1b3", INK, "#a69e90", "#6f685d", "#e2d9c8", "#7d9bb5"];
     const counts = {}; G.nodes.forEach((n) => { counts[n[2]] = (counts[n[2]] || 0) + 1; });
     const lg = document.createElement("p"); lg.className = "gm-legend";
     lg.innerHTML = Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([k, v]) => `<span><i style="background:${shade[k]}"></i>${esc(G.classes[k].replace(/_/g, " "))} ${v}</span>`).join("");
@@ -99,22 +100,22 @@
       for (const [a, b] of G.edges) {
         const [x1, y1] = P(G.nodes[a]), [x2, y2] = P(G.nodes[b]), hh = Math.max(hop[a], hop[b]);
         const on = k >= hh - 1 && k < hh + 1.2;
-        ctx.strokeStyle = on ? ACC : "rgba(236,235,232,.14)"; ctx.lineWidth = on ? 1.2 : .6;
+        ctx.strokeStyle = on ? GM_ACC : "rgba(242,237,228,.14)"; ctx.lineWidth = on ? 1.2 : .6;
         ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
       }
       G.nodes.forEach((n, i) => {
         const [x, y] = P(n);
         ctx.globalAlpha = wave < 0 || k >= hop[i] ? 1 : .3;
-        ctx.fillStyle = i === 0 ? ACC : shade[n[2]];
+        ctx.fillStyle = i === 0 ? GM_ACC : shade[n[2]];
         ctx.beginPath(); ctx.arc(x, y, i === 0 ? 5.5 : i === hover ? 5 : 2.8, 0, 6.283); ctx.fill();
         ctx.globalAlpha = 1;
       });
-      const [cx, cy] = P(G.nodes[0]); ctx.strokeStyle = ACC; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(cx, cy, 10, 0, 6.283); ctx.stroke();
+      const [cx, cy] = P(G.nodes[0]); ctx.strokeStyle = GM_ACC; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(cx, cy, 10, 0, 6.283); ctx.stroke();
       if (hover >= 0) {
         const [x, y] = P(G.nodes[hover]), label = `${hover === 0 ? "Paper 1358 · " : ""}hop ${hop[hover]} · ${G.classes[G.nodes[hover][2]].replace(/_/g, " ")}`;
         ctx.font = '400 12px "Plex Mono", monospace'; const tw = ctx.measureText(label).width;
         const bx = clamp(x + 10, 4, w - tw - 18), by = clamp(y - 28, 4, h - 24);
-        ctx.fillStyle = INK; ctx.fillRect(bx, by, tw + 12, 20); ctx.fillStyle = "#0e0e10"; ctx.fillText(label, bx + 6, by + 14);
+        ctx.fillStyle = INK; ctx.fillRect(bx, by, tw + 12, 20); ctx.fillStyle = "#0c0b0a"; ctx.fillText(label, bx + 6, by + 14);
       }
       if (wave >= 0 && k > 3.4) wave = -1;
     }

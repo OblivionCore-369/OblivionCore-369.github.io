@@ -61,7 +61,7 @@
     for (const [a, b] of edges) {
       const depth = (2 - (P[a][2] + P[b][2]) / 2) / 3, h = pulse ? Math.max(pulse.hop[a], pulse.hop[b]) : 99;
       const on = pulse && k >= h - 1 && k < h + .8;
-      ctx.strokeStyle = on ? ACC : `rgba(236,235,232,${(.05 + depth * .16).toFixed(3)})`;
+      ctx.strokeStyle = on ? ACC : `rgba(242,237,228,${(.05 + depth * .16).toFixed(3)})`;
       ctx.globalAlpha = on ? .9 : 1;
       ctx.beginPath(); ctx.moveTo(P[a][0], P[a][1]); ctx.lineTo(P[b][0], P[b][1]); ctx.stroke();
     }
@@ -100,11 +100,11 @@
   });
 
   /* switcher card — one system at a time (read from the contents list work.js rendered) */
-  const sys = $$("#contents a").map((a) => ({ href: a.getAttribute("href"), n: $(".c-n", a).textContent, name: $(".c-name", a).firstChild.textContent, dom: $(".c-dom", a).textContent, fig: $(".c-fig", a).textContent }));
+  const sys = $$("#contents a").map((a) => ({ href: a.getAttribute("href"), id: a.dataset.project, n: $(".c-n", a).textContent, name: $(".c-name", a).firstChild.textContent, dom: $(".c-dom", a).textContent, fig: $(".c-fig", a).textContent }));
   const card = $(".sw-card"); let si = 0, auto = null;
   const show = (d) => {
     si = (si + d + sys.length) % sys.length; const x = sys[si];
-    card.href = x.href; $(".sw-n", card).textContent = `${x.n} / 0${sys.length}`; $(".sw-name", card).textContent = x.name;
+    card.href = x.href; card.dataset.project = x.id; $(".sw-n", card).textContent = `${x.n} / 0${sys.length}`; $(".sw-name", card).textContent = x.name;
     $(".sw-dom", card).textContent = x.dom.split(" · ")[0]; $(".sw-fig", card).textContent = x.fig;
     card.classList.remove("swap"); void card.offsetWidth; card.classList.add("swap");
   };
@@ -114,7 +114,7 @@
 
   /* 3D ring — one poster per system on a cylinder, turned by scrolling through the pinned section */
   const ring = $("#ring"), sysSec = $("#systems"), links = $$("#contents a");
-  ring.innerHTML = D.systems.map((s, i) => `<figure style="--n:${i}" data-href="#p-${s.id}"><img src="assets/posters/${s.id}.jpg?v=3" alt="" loading="lazy"><figcaption>${B.esc(s.name)}<span>${s.n}</span></figcaption></figure>`).join("");
+  ring.innerHTML = D.systems.map((s, i) => `<figure style="--n:${i}" data-href="#p-${s.id}" data-project="${s.id}"><img src="assets/posters/${s.id}.jpg?v=3" alt="" loading="lazy"><figcaption>${B.esc(s.name)}<span>${s.n}</span></figcaption></figure>`).join("");
   const figs = $$("figure", ring);
   ring.style.setProperty("--count", figs.length);
   ring.addEventListener("click", (e) => { const f = e.target.closest("figure"); if (f) B.scrollTo(f.dataset.href); });
